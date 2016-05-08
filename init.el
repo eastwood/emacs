@@ -4,10 +4,12 @@
 (setq package-enable-at-startup nil)
 (setq make-backup-file nil)
 (package-initialize)
+(setq-default cursor-type 'bar)
 
 ;; load our custom configuration
 (add-to-list 'load-path (expand-file-name "config" user-emacs-directory))
 (require 'init-packages)
+(require 'shortcuts)
 
 ;; Turn off the default intro screen
 (setq inhibit-splash-screen t)

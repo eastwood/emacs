@@ -53,7 +53,13 @@
 (use-package web-mode
   :ensure t
   :config
-  (require 'web-mode)
+  (defun my-web-mode-hook ()
+    "Hooks for Web mode. Adjust indents"
+
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    (setq web-mode-code-indent-offset 2))
+  (add-hook 'web-mode-hook  'my-web-mode-hook)
   (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode)))
 
 (use-package flycheck
@@ -63,6 +69,9 @@
   (global-flycheck-mode)
   (setq-default flycheck-disabled-checker 'javascript-jshint)
   (setq-default flycheck-disabled-checker 'json-jsonlist)
+  ;; This requires an npm i -g eslint-project-relative
+  (setq-default flycheck-javascript-eslint-executable "eslint-project-relative")
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
   (setq-default flycheck-temp-prefix ".flycheck"))
 
 (use-package js2-mode

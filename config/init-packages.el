@@ -55,7 +55,6 @@
   :config
   (defun my-web-mode-hook ()
     "Hooks for Web mode. Adjust indents"
-
     (setq web-mode-markup-indent-offset 2)
     (setq web-mode-css-indent-offset 2)
     (setq web-mode-code-indent-offset 2))
@@ -78,6 +77,17 @@
   :ensure t
   :config
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+
+(use-package helm
+  :ensure t
+  :config
+  (setq-default helm-fuzzy-match t)
+  (require 'helm-config))
+
+(use-package projectile
+  :ensure t
+  :config
+  (projectile-global-mode))
 
 (use-package markdown-mode
   :ensure t

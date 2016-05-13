@@ -89,6 +89,12 @@
   :config
   (projectile-global-mode))
 
+(use-package helm-projectile
+  :ensure t
+  :config
+  (require 'helm-projectile)
+  (helm-projectile-on))
+
 (use-package markdown-mode
   :ensure t
   :commands (markdown-mode gfm-mode)

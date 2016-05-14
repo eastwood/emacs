@@ -17,13 +17,13 @@
     (end-of-line))
   (newline-and-indent))
 
+
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "C-x b") 'helm-mini)
 (global-set-key (kbd "C-x C-f") 'helm-find-files)
-
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 ;; Mac OSX keybindings
-
-;; Command + Shift + Return => Create line before
+;;Command + Shift + Return => Create line before
 (define-key global-map (kbd "<s-S-return>") 'vi-open-line-above)
 ;; Command + Return => Create line after
 (define-key global-map (kbd "<s-return>") 'vi-open-line-below)

@@ -76,12 +76,17 @@
 (use-package js2-mode
   :ensure t
   :config
+  ;; Enable JS2 mode as primary javascript editing mode
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
 
 (use-package helm
   :ensure t
   :config
   (setq-default helm-fuzzy-match t)
+  (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-x b") 'helm-mini)
+  (global-set-key (kbd "C-x C-f") 'helm-find-files)
+  (define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
   (require 'helm-config))
 
 (use-package projectile
@@ -102,6 +107,11 @@
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
   :init (setq markdown-command "multimarkdown"))
+
+(use-package tern
+  :ensure t
+  :config
+  (tern-mode))
 
 (provide 'init-packages)
 ;;; init-packages.el ends here

@@ -17,11 +17,6 @@
     (end-of-line))
   (newline-and-indent))
 
-
-(global-set-key (kbd "M-x") 'helm-M-x)
-(global-set-key (kbd "C-x b") 'helm-mini)
-(global-set-key (kbd "C-x C-f") 'helm-find-files)
-(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to run persistent action
 ;; Mac OSX keybindings
 ;;Command + Shift + Return => Create line before
 (define-key global-map (kbd "<s-S-return>") 'vi-open-line-above)
@@ -29,9 +24,6 @@
 (define-key global-map (kbd "<s-return>") 'vi-open-line-below)
 ;; Command + Left => Go to beginning of line
 (global-set-key (kbd "<s-left>") 'move-beginning-of-line)
-;; Command + P => Search projectile file
-(global-unset-key (kbd "s-p"))
-(global-set-key (kbd "s-p") 'helm-projectile)
 ;; Command + Right => Go to the end of line
 (global-set-key (kbd "<s-right>") 'move-end-of-line)
 ;; Command + Backspace => Delete to beginning of line

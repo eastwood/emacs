@@ -22,7 +22,7 @@
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 ;; UX options
-(linum-mode t)
+(setq mouse-wheel-progressive-speed nil)
 (show-paren-mode 1)
 (put 'dired-find-alternate-file 'disabled nil)
 (custom-set-variables

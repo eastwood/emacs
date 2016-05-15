@@ -101,6 +101,7 @@
 (use-package tern
   :ensure t
   :config
+  (setq js2-basic-offset 2)
   (add-hook 'js-mode-hook (lambda () (tern-mode t))))
 
 (use-package tern-auto-complete

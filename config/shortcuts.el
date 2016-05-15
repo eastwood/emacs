@@ -17,7 +17,10 @@
     (end-of-line))
   (newline-and-indent))
 
+
 ;; Mac OSX keybindings
+(put 'dired-find-alternate-file 'disabled nil)
+(setq mac-right-command-modifier 'ctrl)
 ;;Command + Shift + Return => Create line before
 (define-key global-map (kbd "<s-S-return>") 'vi-open-line-above)
 ;; Command + Return => Create line after

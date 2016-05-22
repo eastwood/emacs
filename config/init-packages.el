@@ -89,7 +89,8 @@
   (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
   (setq ivy-height 10)
-  (setq ivy-count-format "(%d/%d) "))
+  (setq ivy-count-format "(%d/%d) ")
+  :bind("C-s" . swiper))
   
 (use-package projectile
   :ensure t

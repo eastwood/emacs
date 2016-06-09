@@ -1,3 +1,4 @@
+;; -*- mode: emacs-lisp -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 (defun dotspacemacs/layers ()
@@ -25,6 +26,7 @@ values."
      better-defaults
      emacs-lisp
      javascript
+     react
      git
      markdown
      org
@@ -94,13 +96,13 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light
-                         solarized-light
+   dotspacemacs-themes '(zenburn
                          solarized-dark
+                         solarized-light
+                         spacemacs-dark
+                         spacemacs-light
                          leuven
-                         monokai
-                         zenburn)
+                         monokai)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -245,16 +247,23 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
+  This function is called at the very end of Spacemacs initialization after
+  layers configuration.
+  This is the place where most of your configurations should be done. Unless it is
+  explicitly specified that a variable should be set before a package is loaded,
+  you should place your code here."
   (setq-default flycheck-javascript-eslint-executable "eslint-project-relative")
   (setq-default evil-escape-key-sequence "jk")
-  (setq-default js2-basic-offset 2)
-  (setq-default js-indent-level 2)
-  (setq-default dotspacemacs-line-numbers 'relative)
+
+  (setq-default web-mode-markup-indent-offset 2
+                web-mode-css-indent-offset 2
+                web-mode-code-indent-offset 2
+                web-mode-attr-indent-offset 2)
+
+  (setq-default js2-basic-offset 2
+                css-indent-offset 2
+                js-indent-level 2)
+
   (define-key evil-normal-state-map (kbd "SPC w o") 'spacemacs/toggle-maximize-buffer)
 
 )

@@ -96,9 +96,9 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(zenburn
-                         solarized-light
+   dotspacemacs-themes '(solarized-light
                          solarized-dark
+                         zenburn
                          monokai)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
@@ -167,7 +167,7 @@ values."
    dotspacemacs-enable-paste-micro-state nil
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
-   dotspacemacs-which-key-delay 0.4
+   dotspacemacs-which-key-delay 0.8
    ;; Which-key frame position. Possible values are `right', `bottom' and
    ;; `right-then-bottom'. right-then-bottom tries to display the frame to the
    ;; right; if there is insufficient space it displays it at the bottom.
@@ -259,6 +259,7 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (setq-default js2-basic-offset 2
                 css-indent-offset 2
+                js2-strict-missing-semi-warning nil
                 js-indent-level 2)
 
   (define-key evil-normal-state-map (kbd "SPC w o") 'spacemacs/toggle-maximize-buffer)

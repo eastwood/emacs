@@ -259,7 +259,6 @@ before packages are loaded. If you are unsure, you should try in setting them in
 
   (setq-default js2-basic-offset 2
                 css-indent-offset 2
-                js2-strict-missing-semi-warning nil
                 js-indent-level 2)
 
   (define-key evil-normal-state-map (kbd "SPC w o") 'spacemacs/toggle-maximize-buffer)

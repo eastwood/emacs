@@ -96,8 +96,11 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(gruvbox
-                         solarized-light)
+   dotspacemacs-themes '(solarized-dark
+                         solarized-light
+                         material
+                         material-light
+                         )
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font. `powerline-scale' allows to quickly tweak the mode-line
@@ -184,7 +187,7 @@ values."
    ;; If non nil the frame is maximized when Emacs starts up.
    ;; Takes effect only if `dotspacemacs-fullscreen-at-startup' is nil.
    ;; (default nil) (Emacs 24.4+ only)
-   dotspacemacs-maximized-at-startup t
+   dotspacemacs-maximized-at-startup nil
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
@@ -238,7 +241,11 @@ before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
   (server-start)
   (setq create-lockfiles nil)
-  (setq neo-theme 'nerd))
+  (setq neo-theme 'nerd)
+  (setq-default dotspacemacs-configuration-layers
+                '((auto-completion :variables
+                                   auto-completion-enable-snippets-in-popup t)))
+  )
 
 (setq tramp-ssh-controlmaster-options
       "-o ControlMaster=auto -o ControlPath='tramp.%%C' -o ControlPersist=no")
@@ -257,6 +264,8 @@ before packages are loaded. If you are unsure, you should try in setting them in
                 web-mode-css-indent-offset 2
                 web-mode-code-indent-offset 2
                 web-mode-attr-indent-offset 2)
+  ;; Scroll one line at a time
+  (setq mouse-wheel-scroll-amount '(1 ((shift) . 1)))
 
   (setq-default js2-basic-offset 2
                 css-indent-offset 2

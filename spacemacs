@@ -24,7 +24,7 @@ values."
      ;; ----------------------------------------------------------------
      auto-completion
      better-defaults
-     dockerfile
+     docker
      emacs-lisp
      javascript
      react

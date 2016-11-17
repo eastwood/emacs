@@ -49,3 +49,11 @@
 :config (load-theme 'zenburn t))
 #+END_SRC
 
+
+
+
+* TODO [0/2] C-[cxb]
+  - [ ] Ace Window baby...install it
+  - [ ] Finish blog articles
+  - [ ] Update my own blog
+

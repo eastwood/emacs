@@ -1,18 +1,13 @@
 #+STARTUP: overview
-* Init
-#+BEGIN_SRC emacs-lisp
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
-#+END_SRC
 * Interface Tweaks
 #+BEGIN_SRC emacs-lisp
+(linum-mode 1)
+(scroll-bar-mode -1)
 (setq inhibit-startup-message t)
 (tool-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-set-key (kbd "<f5>") 'revert-buffer)
 #+END_SRC
-
 * Which Key
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
@@ -26,7 +21,7 @@
 (use-package org-bullets
 :ensure t
 :config
-(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
 
 * Autocomplete
@@ -34,10 +29,9 @@
 (use-package auto-complete
 :ensure t
 :init
-(progn
   (ac-config-default)
   (global-auto-complete-mode t)
-  ))
+  )
 #+END_SRC
 
 * Colorthemes
@@ -48,12 +42,84 @@
 :ensure t
 :config (load-theme 'zenburn t))
 #+END_SRC
-
-
-
-
-* TODO [0/2] C-[cxb]
-  - [ ] Ace Window baby...install it
-  - [ ] Finish blog articles
-  - [ ] Update my own blog
-
+  
+* Ace Window
+#+BEGIN_SRC emacs-lisp
+(use-package ace-window
+:ensure t
+:init
+(progn
+  (global-set-key [remap other-window] 'ace-window)
+  (custom-set-faces
+   '(aw-leading-char-face
+     ((t (:inherit ace-jump-face-foreground :height 3.0))))) 
+  ))
+#+END_SRC
+  
+* Ivy/Swiper
+#+BEGIN_SRC emacs-lisp
+(use-package swiper
+  :ensure t
+  :diminish ivy-mode
+  :init
+  (ivy-mode 1)
+  (use-package counsel
+    :ensure t)
+  :config
+  (setq ivy-use-virtual-buffers t)
+  :bind
+  ("s-f" . swiper)
+  ("M-x" . counsel-M-x)
+  ("M-y" . counsel-yank-pop)
+  ("C-x C-f" . counsel-find-file))
+#+END_SRC
+* Evil
+#+BEGIN_SRC emacs-lisp
+(use-package evil
+  :diminish evil-mode
+  :ensure t
+  :config
+  (evil-mode 1))
+(use-package evil-magit
+  :ensure t)
+(use-package evil-leader
+  :ensure t
+  :config
+  (evil-leader/set-leader "SPC")
+  (evil-leader/set-key
+   "SPC" 'counsel-M-x
+   "bb" 'ivy-switch-buffer
+   "bd" 'kill-buffer
+   "gs" 'magit-status
+   "bn" 'next-buffer
+   "bp" 'previous-buffer
+   "fs" 'save-buffer
+   "ff" 'counsel-find-file
+   "fed" 'open-config-file
+   "tl" 'toggle-truncate-lines
+   "wc" 'evil-window-delete
+   "wo" 'delete-other-windows
+   "wj" 'evil-window-down
+   "wk" 'evil-window-up
+   "wh" 'evil-window-left
+   "wl" 'evil-window-right
+   "wv" 'evil-window-vsplit
+   "ws" 'evil-window-split)
+  (global-evil-leader-mode))
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode))
+#+END_SRC
+* Magit
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+  :ensure t)
+#+END_SRC
+  
+* Functions
+#+BEGIN_SRC emacs-lisp
+(defun open-config-file()
+  (interactive)
+  (find-file "~/.emacs.d/org-init.org"))
+#+END_SRC

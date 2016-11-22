@@ -8,72 +8,11 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 (global-set-key (kbd "<f5>") 'revert-buffer)
 #+END_SRC
-* Which Key
-#+BEGIN_SRC emacs-lisp
-(use-package which-key
-	:ensure t 
-	:config
-	(which-key-mode))
-#+END_SRC
-
-* Org Bullet Points
-#+BEGIN_SRC emacs-lisp
-(use-package org-bullets
-:ensure t
-:config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-#+END_SRC
-
-* Autocomplete
-#+BEGIN_SRC emacs-lisp
-(use-package auto-complete
-:ensure t
-:init
-  (ac-config-default)
-  (global-auto-complete-mode t)
-  )
-#+END_SRC
-
-* Colorthemes
-#+BEGIN_SRC emacs-lisp
-(use-package color-theme
-:ensure t)
-(use-package zenburn-theme
-:ensure t
-:config (load-theme 'zenburn t))
-#+END_SRC
-  
-* Ace Window
-#+BEGIN_SRC emacs-lisp
-(use-package ace-window
-:ensure t
-:init
-(progn
-  (global-set-key [remap other-window] 'ace-window)
-  (custom-set-faces
-   '(aw-leading-char-face
-     ((t (:inherit ace-jump-face-foreground :height 3.0))))) 
-  ))
-#+END_SRC
-  
-* Ivy/Swiper
-#+BEGIN_SRC emacs-lisp
-(use-package counsel
-  :ensure t)
-
-(use-package swiper
-  :ensure t
-  :diminish ivy-mode
-  :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  :bind
-  ("s-f" . swiper)
-  ("M-x" . counsel-M-x)
-  ("M-y" . counsel-yank-pop)
-  ("C-x C-f" . counsel-find-file))
-#+END_SRC
 * Evil
+Evil complements the emacs ecosystem perfectly. The first thing I do is get this set up!
+It's super important to have the leader keymap as well, so that I can perform all my combinations super fast.
+A lot of these keybindings have been heavily influenced from spacemacs.
+I like to throw in magit support and surround support too (kudos to Tim Pope as always).
 #+BEGIN_SRC emacs-lisp
 (use-package evil
   :diminish evil-mode
@@ -111,14 +50,144 @@
   :config
   (global-evil-surround-mode))
 #+END_SRC
+* NeoTree
+#+BEGIN_SRC emacs-lisp
+(use-package neotree
+  :ensure t
+  :config
+  (evil-leader/set-key
+    "pt" 'neotree-toggle))
+#+END_SRC
+* Which Key
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+	:ensure t 
+	:config
+	(which-key-mode))
+#+END_SRC
+
+* Org Bullet Points
+#+BEGIN_SRC emacs-lisp
+(use-package org-bullets
+:ensure t
+:config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+END_SRC
+
+* Autocomplete
+#+BEGIN_SRC emacs-lisp
+(use-package auto-complete
+:ensure t
+:init
+  (ac-config-default)
+  (global-auto-complete-mode t))
+#+END_SRC
+
+* Colorthemes
+#+BEGIN_SRC emacs-lisp
+(use-package color-theme
+:ensure t)
+(use-package zenburn-theme
+:ensure t
+:config (load-theme 'zenburn t))
+#+END_SRC
+  
+* Ace Window
+#+BEGIN_SRC emacs-lisp
+(use-package ace-window
+:ensure t
+:init
+(progn
+  (global-set-key [remap other-window] 'ace-window)
+  (custom-set-faces
+   '(aw-leading-char-face
+     ((t (:inherit ace-jump-face-foreground :height 3.0))))) 
+  ))
+#+END_SRC
+  
+* Ivy/Swiper
+#+BEGIN_SRC emacs-lisp
+(use-package counsel
+  :ensure t)
+(use-package swiper
+  :ensure t
+  :diminish ivy-mode
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  :bind
+  ("s-f" . swiper)
+  ("M-x" . counsel-M-x)
+  ("M-y" . counsel-yank-pop)
+  ("C-x C-f" . counsel-find-file))
+#+END_SRC
 * Magit
 #+BEGIN_SRC emacs-lisp
 (use-package magit
   :ensure t)
 #+END_SRC
   
+* Javascript
+#+BEGIN_SRC emacs-lisp
+(use-package json-mode
+  :ensure t)
+(use-package js2-mode
+  :diminish js2-mode
+  :ensure t
+  :config
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+(use-package web-mode
+  :ensure t
+  :config
+  (defun my-web-mode-hook ()
+    "Hooks for Web mode. Adjust indents"
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    (setq web-mode-code-indent-offset 2))
+  (add-hook 'web-mode-hook  'my-web-mode-hook)
+  (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode)))
+#+END_SRC
+* FlyCheck
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :ensure t
+  :config
+  (require 'flycheck)
+  (global-flycheck-mode)
+  (setq-default flycheck-disabled-checker 'javascript-jshint)
+  (setq-default flycheck-disabled-checker 'json-jsonlist)
+  ;; This requires an npm i -g eslint-project-relative
+  (setq-default flycheck-javascript-eslint-executable "eslint-project-relative")
+  (flycheck-add-mode 'javascript-eslint 'web-mode)
+  (setq-default flycheck-temp-prefix ".flycheck"))
+#+END_SRC
+* Projectile
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :diminish projectile-mode
+  :ensure t
+  :commands (projectile-find-file projectile-switch-project)
+  :init
+  (evil-leader/set-key
+    "pf" 'projectile-find-file
+    "pp" 'projectile-switch-project
+    "pt" 'neotree-toggle
+    )
+  :bind ("s-p" . projectile-find-file)
+  :config
+  (setq projectile-completion-system 'ivy)
+  (projectile-global-mode))
+#+END_SRC
+
 * Functions
 #+BEGIN_SRC emacs-lisp
+;; OSX fix for eslint lookup
+(use-package exec-path-from-shell
+  :ensure t
+  :config
+  (when (memq window-system '(mac ns))
+    (exec-path-from-shell-initialize)))
+
 (defun open-config-file()
   (interactive)
   (find-file "~/.emacs.d/org-init.org"))

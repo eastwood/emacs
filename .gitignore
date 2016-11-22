@@ -1,2 +1,4 @@
 *.dat
 elpa/
+/org-init.el
+/network-security.data

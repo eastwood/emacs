@@ -58,14 +58,14 @@
   
 * Ivy/Swiper
 #+BEGIN_SRC emacs-lisp
+(use-package counsel
+  :ensure t)
+
 (use-package swiper
   :ensure t
   :diminish ivy-mode
-  :init
-  (ivy-mode 1)
-  (use-package counsel
-    :ensure t)
   :config
+  (ivy-mode 1)
   (setq ivy-use-virtual-buffers t)
   :bind
   ("s-f" . swiper)

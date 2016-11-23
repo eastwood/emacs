@@ -1,7 +1,8 @@
 #+STARTUP: overview
 * Interface Tweaks
+Just some nice user interfaces tweaks. Bread and butter stuff!
 #+BEGIN_SRC emacs-lisp
-(linum-mode 1)
+(global-linum-mode 1)
 (scroll-bar-mode -1)
 (setq inhibit-startup-message t)
 (tool-bar-mode -1)
@@ -29,6 +30,7 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
    "SPC" 'counsel-M-x
    "bb" 'ivy-switch-buffer
    "bd" 'kill-buffer
+   "bD" 'kill-other-buffers
    "gs" 'magit-status
    "bn" 'next-buffer
    "bp" 'previous-buffer
@@ -51,6 +53,7 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
   (global-evil-surround-mode))
 #+END_SRC
 * NeoTree
+We need an evil tree!
 #+BEGIN_SRC emacs-lisp
 (use-package neotree
   :ensure t
@@ -64,6 +67,7 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
   (setq neo-smart-open t))
 #+END_SRC
 * Which Key
+Awesome package for key discovery!
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
   :ensure t 
@@ -72,6 +76,7 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
 #+END_SRC
 
 * Org Bullet Points
+Just give me nice bullet points!
 #+BEGIN_SRC emacs-lisp
 (use-package org-bullets
   :ensure t
@@ -89,6 +94,7 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
 #+END_SRC
 
 * Colorthemes
+Zenburn everything!
 #+BEGIN_SRC emacs-lisp
 (use-package color-theme
   :ensure t)
@@ -98,6 +104,7 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
 #+END_SRC
   
 * Ace Window
+I usually don't have many split windows, but ace makes it super convenient to navigate around windows and frames
 #+BEGIN_SRC emacs-lisp
 (use-package ace-window
   :ensure t
@@ -172,16 +179,17 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
   :ensure t
   :commands (projectile-find-file projectile-switch-project)
   :bind ("s-p" . projectile-find-file)
-  :config
+  :init
   (evil-leader/set-key
     "pf" 'projectile-find-file
     "pp" 'projectile-switch-project
     "ft" 'neotree-toggle
     "pt" 'neotree-find-project-root)
+  :config
   (setq projectile-completion-system 'ivy)
   (projectile-global-mode))
 #+END_SRC
-* Functions
+* Auxilary Functions
 #+BEGIN_SRC emacs-lisp
 ;; OSX fix for eslint lookup
 (use-package exec-path-from-shell
@@ -201,6 +209,16 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
 (defun open-config-file()
   (interactive)
   (find-file "~/.emacs.d/org-init.org"))
+
+(defun kill-other-buffers (&optional arg)
+  "Kill all other buffers.
+If the universal prefix argument is used then will the windows too."
+  (interactive "P")
+  (when (yes-or-no-p (format "Killing all buffers except \"%s\"? "
+                             (buffer-name)))
+    (mapc 'kill-buffer (delq (current-buffer) (buffer-list)))
+    (when (equal '(4) arg) (delete-other-windows))
+    (message "Buffers deleted!")))
 
 #+END_SRC
   

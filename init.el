@@ -1,4 +1,9 @@
+;;; package --- Summary
+;;; Commentary:
+;;; Sweet configuration file -> uses babel for loading org based config
 
+;;; Code:
+;;; Bootstrap use-package and melpa repo, adds some customisations
 (require 'package)
 (setq package-enable-at-startup nil)
 (add-to-list 'package-archives
@@ -54,3 +59,5 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0)))))
+(provide 'init)
+;;; init.el ends here

@@ -29,7 +29,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (magit helm ivy counsel ace-window auto-complete org-bullets which-key use-package)))
+    (tern-auto-complete magit helm ivy counsel ace-window auto-complete org-bullets which-key use-package)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map

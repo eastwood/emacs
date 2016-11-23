@@ -61,8 +61,7 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
   (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
   (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
   (setq neo-theme 'nerd)
-  (evil-leader/set-key
-    "pt" 'neotree-toggle))
+  (setq neo-smart-open t))
 #+END_SRC
 * Which Key
 #+BEGIN_SRC emacs-lisp
@@ -177,14 +176,13 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
   (evil-leader/set-key
     "pf" 'projectile-find-file
     "pp" 'projectile-switch-project
-    "pt" 'neotree-toggle
-    )
+    "ft" 'neotree-toggle
+    "pt" 'neotree-find-project-root)
   :bind ("s-p" . projectile-find-file)
   :config
   (setq projectile-completion-system 'ivy)
   (projectile-global-mode))
 #+END_SRC
-
 * Functions
 #+BEGIN_SRC emacs-lisp
 ;; OSX fix for eslint lookup
@@ -194,8 +192,17 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
 
+(defun neotree-find-project-root()
+  (interactive)
+  (if (neo-global--window-exists-p)
+      (neotree-hide)
+    (let ((origin-buffer-file-name (buffer-file-name)))
+      (neotree-find (projectile-project-root))
+      (neotree-find origin-buffer-file-name))))
+
 (defun open-config-file()
   (interactive)
   (find-file "~/.emacs.d/org-init.org"))
+
 #+END_SRC
   

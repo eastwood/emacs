@@ -130,7 +130,7 @@ Solarized everything!
 #+END_SRC
   
 * Ace Window
-I usually don't have many split windows, but ace makes it super convenient to navigate around windows and frames
+I usually don't have many split windows, but ace makes it super convenient to navigate around windows and across frames
 #+BEGIN_SRC emacs-lisp
 (use-package ace-window
   :ensure t

@@ -1,13 +1,21 @@
 #+STARTUP: overview
-* Interface Tweaks
+* General 
+#+BEGIN_SRC emacs-lisp
+(setq-default indent-tabs-mode nil)
+(global-set-key (kbd "<f5>") 'revert-buffer)
+(global-set-key (kbd "<f12>") 'ansi-term)
+#+END_SRC
+
+* Interface
 Just some nice user interfaces tweaks. Bread and butter stuff!
 #+BEGIN_SRC emacs-lisp
 (global-linum-mode 1)
 (scroll-bar-mode -1)
 (setq inhibit-startup-message t)
+(setq-default indent-tabs-mode nil)
+(setq ring-bell-function 'ignore)
 (tool-bar-mode -1)
 (fset 'yes-or-no-p 'y-or-n-p)
-(global-set-key (kbd "<f5>") 'revert-buffer)
 #+END_SRC
 * Evil
 Evil complements the emacs ecosystem perfectly. The first thing I do is get this set up!
@@ -30,6 +38,7 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
    "SPC" 'counsel-M-x
    "bb" 'ivy-switch-buffer
    "bd" 'kill-buffer
+   "bk" 'kill-this-buffer
    "bD" 'kill-other-buffers
    "gs" 'magit-status
    "bn" 'next-buffer
@@ -75,6 +84,11 @@ Awesome package for key discovery!
   (which-key-mode))
 #+END_SRC
 
+* Org
+#+BEGIN_SRC emacs-lisp
+(setq org-directory "~/Dropbox/notes")
+(setq org-default-notes-file (concat org-directory "/todo.org"))
+#+END_SRC
 * Org Bullet Points
 Just give me nice bullet points!
 #+BEGIN_SRC emacs-lisp
@@ -106,14 +120,13 @@ Just give me nice bullet points!
   :config
   (add-hook 'js-mode-hook (lambda () (tern-mode t))))
 #+END_SRC 
-* Colorthemes
-Zenburn everything!
+* Color Theme
+Solarized everything!
 #+BEGIN_SRC emacs-lisp
-(use-package color-theme
-  :ensure t)
-(use-package zenburn-theme
-  :ensure t
-  :config (load-theme 'zenburn t))
+(use-package solarized-theme
+  :defer t
+  :init
+  (load-theme 'solarized-dark t))
 #+END_SRC
   
 * Ace Window
@@ -167,6 +180,7 @@ I usually don't have many split windows, but ace makes it super convenient to na
   (defun my-web-mode-hook ()
     "Hooks for Web mode. Adjust indents"
     (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-attr-indent-offset 2)
     (setq web-mode-css-indent-offset 2)
     (setq web-mode-code-indent-offset 2))
   (add-hook 'web-mode-hook  'my-web-mode-hook)
@@ -202,7 +216,12 @@ I usually don't have many split windows, but ace makes it super convenient to na
   (setq projectile-completion-system 'ivy)
   (projectile-global-mode))
 #+END_SRC
-* Auxilary Functions
+* TODO Layouts Mode (persp-mode)
+* TODO Company Mode
+* TODO Snippets (ya-snippets)
+* TODO Expand Region
+* TODO JS-Comint
+* Helper Functions
 #+BEGIN_SRC emacs-lisp
 ;; OSX fix for eslint lookup
 (use-package exec-path-from-shell

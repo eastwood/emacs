@@ -114,6 +114,7 @@ Just give me nice bullet points!
   :ensure t
   :diminish yas-minor-mode
   :config
+  (setq-default ac-sources (push 'ac-source-yasnippet ac-sources))
   (yas-global-mode 1))
 #+END_SRC
 * Tern

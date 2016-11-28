@@ -73,6 +73,7 @@ We need an evil tree!
   (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
   (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
   (setq neo-theme 'nerd)
+  (setq neo-window-fixed-size nil)
   (setq neo-smart-open t))
 #+END_SRC
 * Which Key

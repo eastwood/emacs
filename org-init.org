@@ -85,20 +85,6 @@ Awesome package for key discovery!
   (which-key-mode))
 #+END_SRC
 
-* Org
-#+BEGIN_SRC emacs-lisp
-(setq org-directory "~/Dropbox/notes")
-(setq org-default-notes-file (concat org-directory "/todo.org"))
-#+END_SRC
-* Org Bullet Points
-Just give me nice bullet points!
-#+BEGIN_SRC emacs-lisp
-(use-package org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
-#+END_SRC
-
 * Autocomplete
 #+BEGIN_SRC emacs-lisp
 (use-package auto-complete
@@ -114,7 +100,11 @@ Just give me nice bullet points!
   :ensure t
   :diminish yas-minor-mode
   :config
-  (setq-default ac-sources (push 'ac-source-yasnippet ac-sources))
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  (evil-leader/set-key
+   "is" 'yas-insert-snippet
+   "in" 'yas-new-snippet)
   (yas-global-mode 1))
 #+END_SRC
 * Tern
@@ -239,6 +229,20 @@ I usually don't have many split windows, but ace makes it super convenient to na
   :bind
   ("C-=" . er/expand-region))
 #+END_SRC
+* Org
+#+BEGIN_SRC emacs-lisp
+(setq org-directory "~/Dropbox/notes")
+(setq org-default-notes-file (concat org-directory "/todo.org"))
+#+END_SRC
+* Org Bullet Points
+Just give me nice bullet points!
+#+BEGIN_SRC emacs-lisp
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+END_SRC
+
 * Helper Functions
 #+BEGIN_SRC emacs-lisp
 ;; OSX fix for eslint lookup

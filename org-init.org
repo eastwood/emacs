@@ -108,7 +108,14 @@ Just give me nice bullet points!
   (ac-config-default)
   (global-auto-complete-mode t))
 #+END_SRC
-
+* Snippets
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :ensure t
+  :diminish yas-minor-mode
+  :config
+  (yas-global-mode 1))
+#+END_SRC
 * Tern
 #+BEGIN_SRC emacs-lisp
 (use-package tern-auto-complete
@@ -119,15 +126,17 @@ Just give me nice bullet points!
   :diminish tern-mode
   :ensure t
   :config
-  (add-hook 'js-mode-hook (lambda () (tern-mode t))))
+  (add-hook 'js-mode-hook 'tern-mode))
 #+END_SRC 
 * Color Theme
 Solarized everything!
 #+BEGIN_SRC emacs-lisp
-(use-package solarized-theme
-  :defer t
-  :init
-  (load-theme 'solarized-dark t))
+(use-package color-theme
+  :ensure t)
+(use-package zenburn-theme
+  :ensure t
+  :config
+  (load-theme 'zenburn t))
 #+END_SRC
   
 * Ace Window
@@ -217,11 +226,18 @@ I usually don't have many split windows, but ace makes it super convenient to na
   (setq projectile-completion-system 'ivy)
   (projectile-global-mode))
 #+END_SRC
-* TODO Layouts Mode (persp-mode)
-* TODO Company Mode
-* TODO Snippets (ya-snippets)
-* TODO Expand Region
-* TODO JS-Comint
+* Smart Parenthesis
+#+BEGIN_SRC emacs-lisp
+(use-package smartparens
+  :ensure t)
+#+END_SRC
+* Expand Region
+#+BEGIN_SRC emacs-lisp
+(use-package expand-region
+  :ensure t
+  :bind
+  ("C-=" . er/expand-region))
+#+END_SRC
 * Helper Functions
 #+BEGIN_SRC emacs-lisp
 ;; OSX fix for eslint lookup
@@ -230,6 +246,7 @@ I usually don't have many split windows, but ace makes it super convenient to na
   :config
   (when (memq window-system '(mac ns))
     (exec-path-from-shell-initialize)))
+
 
 (defun neotree-find-project-root()
   (interactive)

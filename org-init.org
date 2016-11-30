@@ -4,6 +4,7 @@
 (setq-default indent-tabs-mode nil)
 (global-set-key (kbd "<f5>") 'revert-buffer)
 (global-set-key (kbd "<f12>") 'ansi-term)
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 #+END_SRC
 
 * Interface

@@ -27,6 +27,8 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
 (use-package evil
   :diminish evil-mode
   :ensure t
+  :init 
+  (setq evil-want-C-u-scroll t)
   :config
   (evil-mode 1))
 (use-package evil-magit
@@ -45,7 +47,9 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
    "bn" 'next-buffer
    "bp" 'previous-buffer
    "fs" 'save-buffer
+   "fo" 'open-org-file
    "ff" 'counsel-find-file
+   "fr" 'counsel-recentf
    "fed" 'open-config-file
    "tl" 'toggle-truncate-lines
    "wc" 'evil-window-delete
@@ -76,6 +80,7 @@ We need an evil tree!
   (setq neo-theme 'nerd)
   (setq neo-window-fixed-size nil)
   (setq neo-smart-open t))
+  (setq neo-window-width 40)
 #+END_SRC
 * Which Key
 Awesome package for key discovery!
@@ -123,8 +128,6 @@ Awesome package for key discovery!
 * Color Theme
 Solarized everything!
 #+BEGIN_SRC emacs-lisp
-(use-package color-theme
-  :ensure t)
 (use-package zenburn-theme
   :ensure t
   :config
@@ -265,6 +268,10 @@ Just give me nice bullet points!
 (defun open-config-file()
   (interactive)
   (find-file "~/.emacs.d/org-init.org"))
+
+(defun open-org-file()
+  (interactive)
+  (find-file "~/Dropbox/notes/tasks.org"))
 
 (defun kill-other-buffers (&optional arg)
   "Kill all other buffers.

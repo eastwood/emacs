@@ -128,10 +128,10 @@ Awesome package for key discovery!
 * Color Theme
 Solarized everything!
 #+BEGIN_SRC emacs-lisp
-(use-package zenburn-theme
+(use-package solarized-theme
   :ensure t
   :config
-  (load-theme 'zenburn t))
+  (load-theme 'solarized-dark t))
 #+END_SRC
   
 * Ace Window

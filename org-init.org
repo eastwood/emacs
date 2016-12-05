@@ -236,7 +236,8 @@ I usually don't have many split windows, but ace makes it super convenient to na
 * Org
 #+BEGIN_SRC emacs-lisp
 (setq org-directory "~/Dropbox/notes")
-(setq org-default-notes-file (concat org-directory "/todo.org"))
+(setq org-default-notes-file (concat org-directory "/gtd.org"))
+(define-key global-map "\C-cc" 'org-capture)
 #+END_SRC
 * Org Bullet Points
 Just give me nice bullet points!

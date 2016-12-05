@@ -131,7 +131,7 @@ Solarized everything!
 (use-package solarized-theme
   :ensure t
   :config
-  (load-theme 'solarized-dark t))
+  (load-theme 'solarized-light t))
 #+END_SRC
   
 * Ace Window

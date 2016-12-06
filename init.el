@@ -27,9 +27,6 @@
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
- '(org-agenda-files
-   (quote
-    ("~/Dropbox/notes/personal.org" "~/Dropbox/notes/work.org")))
  '(package-selected-packages
    (quote
     (yasnippet tern-auto-complete magit ivy counsel ace-window auto-complete org-bullets which-key use-package)))

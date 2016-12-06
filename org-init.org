@@ -1,23 +1,35 @@
 #+STARTUP: overview
-* General 
+* Ace Window
+I usually don't have many split windows, but ace makes it super convenient to navigate around windows and across frames
 #+BEGIN_SRC emacs-lisp
-(setq-default indent-tabs-mode nil)
-(global-set-key (kbd "<f5>") 'revert-buffer)
-(global-set-key (kbd "<f12>") 'ansi-term)
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+(use-package ace-window
+  :ensure t
+  :init
+  (progn
+    (global-set-key [remap other-window] 'ace-window)
+    (custom-set-faces
+     '(aw-leading-char-face
+      ((t (:inherit ace-jump-face-foreground :height 3.0)))))))
 #+END_SRC
-
-* Interface
-Just some nice user interfaces tweaks. Bread and butter stuff!
+  
+* Autocomplete
 #+BEGIN_SRC emacs-lisp
-(global-linum-mode 1)
-(scroll-bar-mode -1)
-(setq inhibit-startup-message t)
-(setq-default indent-tabs-mode nil)
-(setq ring-bell-function 'ignore)
-(tool-bar-mode -1)
-(fset 'yes-or-no-p 'y-or-n-p)
+(use-package auto-complete
+  :diminish auto-complete-mode
+  :ensure t
+  :init
+  (ac-config-default)
+  (global-auto-complete-mode t))
 #+END_SRC
+* Color Theme
+Solarized everything!
+#+BEGIN_SRC emacs-lisp
+(use-package solarized-theme
+  :ensure t
+  :config
+  (load-theme 'solarized-light t))
+#+END_SRC
+  
 * Evil
 Evil complements the emacs ecosystem perfectly. The first thing I do is get this set up!
 It's super important to have the leader keymap as well, so that I can perform all my combinations super fast.
@@ -43,7 +55,6 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
    "bd" 'kill-buffer
    "bk" 'kill-this-buffer
    "bD" 'kill-other-buffers
-   "gs" 'magit-status
    "bn" 'next-buffer
    "bp" 'previous-buffer
    "fs" 'save-buffer
@@ -66,130 +77,12 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
   :config
   (global-evil-surround-mode))
 #+END_SRC
-* NeoTree
-We need an evil tree!
+* Expand Region
 #+BEGIN_SRC emacs-lisp
-(use-package neotree
+(use-package expand-region
   :ensure t
-  :config
-  ;; Some nice bindings for evil
-  (evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
-  (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
-  (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
-  (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
-  (setq neo-theme 'nerd)
-  (setq neo-window-fixed-size nil)
-  (setq neo-smart-open t))
-  (setq neo-window-width 40)
-#+END_SRC
-* Which Key
-Awesome package for key discovery!
-#+BEGIN_SRC emacs-lisp
-(use-package which-key
-  :ensure t 
-  :config
-  (which-key-mode))
-#+END_SRC
-
-* Autocomplete
-#+BEGIN_SRC emacs-lisp
-(use-package auto-complete
-  :diminish auto-complete-mode
-  :ensure t
-  :init
-  (ac-config-default)
-  (global-auto-complete-mode t))
-#+END_SRC
-* Snippets
-#+BEGIN_SRC emacs-lisp
-(use-package yasnippet
-  :ensure t
-  :diminish yas-minor-mode
-  :config
-  (define-key yas-minor-mode-map (kbd "<tab>") nil)
-  (define-key yas-minor-mode-map (kbd "TAB") nil)
-  (evil-leader/set-key
-   "is" 'yas-insert-snippet
-   "in" 'yas-new-snippet)
-  (yas-global-mode 1))
-#+END_SRC
-* Tern
-#+BEGIN_SRC emacs-lisp
-(use-package tern-auto-complete
-  :ensure t
-  :config
-  (tern-ac-setup))
-(use-package tern
-  :diminish tern-mode
-  :ensure t
-  :config
-  (add-hook 'js-mode-hook 'tern-mode))
-#+END_SRC 
-* Color Theme
-Solarized everything!
-#+BEGIN_SRC emacs-lisp
-(use-package solarized-theme
-  :ensure t
-  :config
-  (load-theme 'solarized-light t))
-#+END_SRC
-  
-* Ace Window
-I usually don't have many split windows, but ace makes it super convenient to navigate around windows and across frames
-#+BEGIN_SRC emacs-lisp
-(use-package ace-window
-  :ensure t
-  :init
-  (progn
-    (global-set-key [remap other-window] 'ace-window)
-    (custom-set-faces
-     '(aw-leading-char-face
-      ((t (:inherit ace-jump-face-foreground :height 3.0)))))))
-#+END_SRC
-  
-* Ivy/Swiper
-#+BEGIN_SRC emacs-lisp
-(use-package counsel
-  :ensure t)
-(use-package swiper
-  :ensure t
-  :diminish ivy-mode
-  :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
   :bind
-  ("s-f" . swiper)
-  ("M-x" . counsel-M-x)
-  ("M-y" . counsel-yank-pop)
-  ("C-x C-f" . counsel-find-file))
-#+END_SRC
-* Magit
-#+BEGIN_SRC emacs-lisp
-(use-package magit
-  :ensure t)
-#+END_SRC
-  
-* Javascript
-#+BEGIN_SRC emacs-lisp
-(use-package json-mode
-  :ensure t)
-(use-package js2-mode
-  :diminish js2-mode
-  :ensure t
-  :config
-  (setq js2-basic-offset 2)
-  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
-(use-package web-mode
-  :ensure t
-  :config
-  (defun my-web-mode-hook ()
-    "Hooks for Web mode. Adjust indents"
-    (setq web-mode-markup-indent-offset 2)
-    (setq web-mode-attr-indent-offset 2)
-    (setq web-mode-css-indent-offset 2)
-    (setq web-mode-code-indent-offset 2))
-  (add-hook 'web-mode-hook  'my-web-mode-hook)
-  (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode)))
+  ("C-=" . er/expand-region))
 #+END_SRC
 * FlyCheck
 #+BEGIN_SRC emacs-lisp
@@ -204,53 +97,12 @@ I usually don't have many split windows, but ace makes it super convenient to na
   (setq-default flycheck-javascript-eslint-executable "eslint-project-relative")
   (flycheck-add-mode 'javascript-eslint 'web-mode))
 #+END_SRC
-* Projectile
+* General 
 #+BEGIN_SRC emacs-lisp
-(use-package projectile
-  :diminish projectile-mode
-  :ensure t
-  :commands (projectile-find-file projectile-switch-project)
-  :bind ("s-p" . projectile-find-file)
-  :init
-  (evil-leader/set-key
-    "pf" 'projectile-find-file
-    "pp" 'projectile-switch-project
-    "ft" 'neotree-toggle
-    "pt" 'neotree-find-project-root)
-  :config
-  (setq projectile-completion-system 'ivy)
-  (projectile-global-mode))
-#+END_SRC
-* Smart Parenthesis
-#+BEGIN_SRC emacs-lisp
-(use-package smartparens
-  :ensure t)
-#+END_SRC
-* Expand Region
-#+BEGIN_SRC emacs-lisp
-(use-package expand-region
-  :ensure t
-  :bind
-  ("C-=" . er/expand-region))
-#+END_SRC
-* Org
-#+BEGIN_SRC emacs-lisp
-(setq org-directory "~/Dropbox/notes")
-(setq org-default-notes-file (concat org-directory "/gtd.org"))
-(define-key global-map "\C-cc" 'org-capture)
-(setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/Dropbox/notes/gtd.org" "Tasks")
-             "* TODO %?\n  %i\n  %a")
-        ("j" "Journal" entry (file+datetree "~/Dropbox/notes/journal.org")
-             "* %?\nEntered on %U\n  %i\n  %a")))
-#+END_SRC
-* Org Bullet Points
-Just give me nice bullet points!
-#+BEGIN_SRC emacs-lisp
-(use-package org-bullets
-  :ensure t
-  :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+(setq-default indent-tabs-mode nil)
+(global-set-key (kbd "<f5>") 'revert-buffer)
+(global-set-key (kbd "<f12>") 'ansi-term)
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 #+END_SRC
 
 * Helper Functions
@@ -291,3 +143,158 @@ If the universal prefix argument is used then will the windows too."
 
 #+END_SRC
   
+* Interface
+Just some nice user interfaces tweaks. Bread and butter stuff!
+#+BEGIN_SRC emacs-lisp
+(global-linum-mode 1)
+(scroll-bar-mode -1)
+(setq inhibit-startup-message t)
+(setq-default indent-tabs-mode nil)
+(setq ring-bell-function 'ignore)
+(tool-bar-mode -1)
+(fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+* Ivy/Swiper
+#+BEGIN_SRC emacs-lisp
+(use-package counsel
+  :ensure t)
+(use-package swiper
+  :ensure t
+  :diminish ivy-mode
+  :config
+  (ivy-mode 1)
+  (setq ivy-use-virtual-buffers t)
+  :bind
+  ("s-f" . swiper)
+  ("M-x" . counsel-M-x)
+  ("M-y" . counsel-yank-pop)
+  ("C-x C-f" . counsel-find-file))
+#+END_SRC
+* Javascript
+#+BEGIN_SRC emacs-lisp
+(use-package json-mode
+  :ensure t)
+(use-package js2-mode
+  :diminish js2-mode
+  :ensure t
+  :config
+  (setq js2-basic-offset 2)
+  (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+(use-package web-mode
+  :ensure t
+  :config
+  (defun my-web-mode-hook ()
+    "Hooks for Web mode. Adjust indents"
+    (setq web-mode-markup-indent-offset 2)
+    (setq web-mode-attr-indent-offset 2)
+    (setq web-mode-css-indent-offset 2)
+    (setq web-mode-code-indent-offset 2))
+  (add-hook 'web-mode-hook  'my-web-mode-hook)
+  (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode)))
+#+END_SRC
+* Magit
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+  :ensure t
+  :config
+  (evil-leader/set-key
+   "gs" 'magit-status))
+#+END_SRC
+  
+* NeoTree
+We need an evil tree!
+#+BEGIN_SRC emacs-lisp
+(use-package neotree
+  :ensure t
+  :config
+  ;; Some nice bindings for evil
+  (evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+  (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)
+  (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+  (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+  (setq neo-theme 'nerd)
+  (setq neo-window-fixed-size nil)
+  (setq neo-smart-open t))
+  (setq neo-window-width 40)
+#+END_SRC
+* Org
+#+BEGIN_SRC emacs-lisp
+(setq org-directory "~/Dropbox/notes")
+(setq org-default-notes-file (concat org-directory "/gtd.org"))
+(define-key global-map "\C-cc" 'org-capture)
+(define-key org-agenda-mode-map "c" 'org-agenda-columns)
+(evil-leader/set-key
+    "oc" 'org-capture
+    "oa" 'org-agenda
+    "os" 'org-schedule)
+
+(org-agenda-files (quote ("~/Dropbox/notes/gtd.org")))
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/Dropbox/notes/gtd.org" "Tasks")
+             "* TODO %?\n  %i\n  %a")
+        ("j" "Journal" entry (file+datetree "~/Dropbox/notes/journal.org")
+             "* %?\nEntered on %U\n  %i\n  %a")))
+#+END_SRC
+Just give me nice bullet points!
+#+BEGIN_SRC emacs-lisp
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+#+END_SRC
+* Projectile
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :diminish projectile-mode
+  :ensure t
+  :commands (projectile-find-file projectile-switch-project)
+  :bind ("s-p" . projectile-find-file)
+  :init
+  (evil-leader/set-key
+    "pf" 'projectile-find-file
+    "pp" 'projectile-switch-project
+    "ft" 'neotree-toggle
+    "pt" 'neotree-find-project-root)
+  :config
+  (setq projectile-completion-system 'ivy)
+  (projectile-global-mode))
+#+END_SRC
+* Smart Parenthesis
+#+BEGIN_SRC emacs-lisp
+(use-package smartparens
+  :ensure t)
+#+END_SRC
+* Snippets
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :ensure t
+  :diminish yas-minor-mode
+  :config
+  (define-key yas-minor-mode-map (kbd "<tab>") nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  (evil-leader/set-key
+   "is" 'yas-insert-snippet
+   "in" 'yas-new-snippet)
+  (yas-global-mode 1))
+#+END_SRC
+* Tern
+#+BEGIN_SRC emacs-lisp
+(use-package tern-auto-complete
+  :ensure t
+  :config
+  (tern-ac-setup))
+(use-package tern
+  :diminish tern-mode
+  :ensure t
+  :config
+  (add-hook 'js-mode-hook 'tern-mode))
+#+END_SRC 
+* Which Key
+Awesome package for key discovery!
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :ensure t 
+  :config
+  (which-key-mode))
+#+END_SRC
+

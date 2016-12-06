@@ -238,6 +238,11 @@ I usually don't have many split windows, but ace makes it super convenient to na
 (setq org-directory "~/Dropbox/notes")
 (setq org-default-notes-file (concat org-directory "/gtd.org"))
 (define-key global-map "\C-cc" 'org-capture)
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/Dropbox/notes/gtd.org" "Tasks")
+             "* TODO %?\n  %i\n  %a")
+        ("j" "Journal" entry (file+datetree "~/Dropbox/notes/journal.org")
+             "* %?\nEntered on %U\n  %i\n  %a")))
 #+END_SRC
 * Org Bullet Points
 Just give me nice bullet points!
@@ -272,7 +277,7 @@ Just give me nice bullet points!
 
 (defun open-org-file()
   (interactive)
-  (find-file "~/Dropbox/notes/tasks.org"))
+  (find-file "~/Dropbox/notes/gtd.org"))
 
 (defun kill-other-buffers (&optional arg)
   "Kill all other buffers.

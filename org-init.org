@@ -242,7 +242,9 @@ We need an evil tree!
     "os" 'org-schedule)
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/Dropbox/notes/gtd.org" "Tasks")
-             "* TODO %?\n  %i\n  %a")
+             "* TODO %?\n%T" :prepend T)
+        ("i" "Ideas" entry (file+headline "~/Dropbox/notes/gtd.org" "Ideas")
+             "* %?\n%T" :prepend T)
         ("j" "Journal" entry (file+datetree "~/Dropbox/notes/journal.org")
              "* %?\nEntered on %U\n  %i\n  %a")))
 #+END_SRC

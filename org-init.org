@@ -182,8 +182,10 @@ Just some nice user interfaces tweaks. Bread and butter stuff!
   :config
   (setq js2-basic-offset 2)
   (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode)))
+  (add-to-list 'auto-mode-alist '("\\.jsx\\'" . js2-jsx-mode)))
 (use-package web-mode
   :ensure t
+  :init
   :config
   (defun my-web-mode-hook ()
     "Hooks for Web mode. Adjust indents"
@@ -192,7 +194,6 @@ Just some nice user interfaces tweaks. Bread and butter stuff!
     (setq web-mode-css-indent-offset 2)
     (setq web-mode-code-indent-offset 2))
   (add-hook 'web-mode-hook  'my-web-mode-hook)
-  (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode)))
 #+END_SRC
 * Magit
 #+BEGIN_SRC emacs-lisp

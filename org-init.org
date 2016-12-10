@@ -236,6 +236,7 @@ We need an evil tree!
 (evil-leader/set-key
     "oc" 'org-capture
     "oe" 'org-set-effort
+    "ot" 'org-set-tags-command
     "od" 'org-deadline
     "oa" 'org-agenda
     "os" 'org-schedule)

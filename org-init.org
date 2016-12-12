@@ -25,9 +25,10 @@ I usually don't have many split windows, but ace makes it super convenient to na
 Solarized everything!
 #+BEGIN_SRC emacs-lisp
 (use-package solarized-theme
-  :ensure t
-  :config
-  (load-theme 'solarized-light t))
+  :ensure t)
+(use-package spacemacs-theme
+  :defer t
+  :init (load-theme 'spacemacs-dark t))
 #+END_SRC
   
 * Evil
@@ -235,10 +236,14 @@ We need an evil tree!
                       ("COMPUTER" . ?l) ("MOVIES" . ?m) ("READING" . ?r) ("PROJECT" . ?p)))
 (evil-leader/set-key
     "oc" 'org-capture
+    "on" 'org-narrow-to-subtree
+    "ow" 'widen
     "oe" 'org-set-effort
     "od" 'org-deadline
     "oa" 'org-agenda
     "os" 'org-schedule)
+(evil-leader/set-key-for-mode 'org-capture-mode "c" 'org-capture-finalize)
+(evil-leader/set-key-for-mode 'org-capture-mode "k" 'org-capture-kill)
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/Dropbox/notes/gtd.org" "Tasks")
              "* TODO %?\n%T" :prepend T)

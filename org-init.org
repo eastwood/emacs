@@ -44,8 +44,6 @@ I like to throw in magit support and surround support too (kudos to Tim Pope as 
   (setq evil-want-C-u-scroll t)
   :config
   (evil-mode 1))
-(use-package evil-magit
-  :ensure t)
 (use-package evil-leader
   :ensure t
   :config
@@ -200,6 +198,8 @@ Just some nice user interfaces tweaks. Bread and butter stuff!
 (use-package magit
   :ensure t
   :config
+  (use-package evil-magit
+    :ensure t)
   (evil-leader/set-key
    "gs" 'magit-status))
 #+END_SRC
